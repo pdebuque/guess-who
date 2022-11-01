@@ -38,8 +38,8 @@ function loadRandom() {
     for (let i = 0; i < 9; i++) {
         const personToAdd = people[indexArr[i]];
         $('#list-of-people').append(`
-            <div>
-                <img class="prof-pic" id="${personToAdd.name}" src="https://github.com/${personToAdd.githubUsername}.png?size=250" alt = "Profile image of ${personToAdd.name}">
+            <div class="prof-pic" id="${personToAdd.name}" style="background-image: url(https://github.com/${personToAdd.githubUsername}.png?size=250)" aria-label="Profile image of ${personToAdd.name}">
+                <div class='empty'></div>
                 <p class="on-image-text"></p>
             </div>
         `)
@@ -53,8 +53,8 @@ function loadImages() {
     $('#list-of-people').empty();
     for (let person of people) {
         $('#list-of-people').append(`
-            <div>
-                <img class="prof-pic" id="${person.name}" src="https://github.com/${person.githubUsername}.png?size=250" alt = "Profile image of ${person.name}">
+            <div class="prof-pic" id="${person.name}" style="background-image: url(https://github.com/${person.githubUsername}.png?size=250)" aria-label="Profile image of ${person.name}">
+            <div class='empty'></div>
                 <p class="on-image-text"></p>
             </div>
         `)
@@ -65,7 +65,7 @@ function startGame() {
     console.log('in startGame');
     // reset stuff in case this is not the first time playing
 
-    resetGame();
+    resetGame(); //resets all classes, empties text fields, arms/disarms buttons
 
     // $('#play-game-btn').removeClass('play-again');
     // $('#play-game-btn').addClass('btn-in-game');
@@ -77,16 +77,19 @@ function startGame() {
     // how to randomize array of images?...
 
 
+    // disarm button during game
+    $('#play-game-btn').off('click', loadImages);
+    $('#play-game-btn').off('click', startGame);
     // choose random integer between 1 and the number of people
     const personInd = randomNum(0, 8)
     let personToGuess = people[personInd].name;
 
-    $('img').addClass('img-game-on')
+    $('.prof-pic').addClass('game-on')
 
     // display the name to guess
     $('#guess-zone').empty();
     $('#guess-zone').append(`
-            Click on: <span id="person-to-guess">${personToGuess}</span>
+        Click on: <span id="person-to-guess">${personToGuess}</span>
     `);
     // create listener on the corresponding box, sending user to congratulations
 
@@ -94,7 +97,7 @@ function startGame() {
 
     // create listener on all other boxes, prompting try again
 
-    $(`img:not(#${personToGuess}`).on('click', tryAgain);
+    $(`.prof-pic:not(#${personToGuess}`).on('click', tryAgain);
 
 }
 
@@ -102,22 +105,28 @@ function congratulate() {
 
 
     //remove in-game functionality on images
-    $(`img`).removeClass('img-game-on');
-    $(`img`).off('click', tryAgain);
+    $(`.prof-pic`).removeClass('img-game-on');
+    $(`.prof-pic`).off('click', tryAgain);
     $(this).off('click', congratulate);
 
     // blur all other faces. this feels kind of a hacky way to do this. how to select not 'this'?
-    $('img').addClass('blur');
+    $('.prof-pic').addClass('blur');
     $(this).removeClass('blur');
 
     //congratulations message
-    $(this).next().empty().append(`
-    You got it!
+    $(this).children('.on-image-text').addClass('correct');
+    $(this).children('.on-image-text').empty().append(`
+    YOU GOT IT!
 `)
 
+    setTimeout(activateButtons, 2000);
+
+}
+
+function activateButtons() {
     // Turn top button to play again option
 
-    $('#play-game-btn').html('PLAY AGAIN?');
+    $('#play-game-btn').text('PLAY AGAIN?');
     $('#play-game-btn').on('click', startGame);
 
     $('#play-game-btn').removeClass('btn-in-game')
@@ -133,33 +142,39 @@ function congratulate() {
 
     $('#random-game-btn').on('click', loadRandom);
     $('#random-game-btn').on('click', startGame);
-
 }
 
-function tryAgain() {
-    console.log($(this));
 
+function tryAgain() {
     $(this).addClass('blur')
-    $(this).next().empty().append(`
-        Nope! Try again!
-    `)
+
 }
 
 function resetGame() {
     // clear text under images
-    $('img').next().empty();
+    $('.prof-pic').children('.on-image-text').empty();
+    $('.prof-pic').children('.on-image-text').removeClass('correct');
 
     // remove image blur
-    $('img').removeClass('blur');
+    $('.prof-pic').removeClass('blur');
 
     // reset start game buttons
+    $('#play-game-btn').on('click', loadImages);
+    $('#play-game-btn').on('click', startGame);
     $('#play-game-btn').html('MAKE YOUR GUESS');
     $('.button').off('click', startGame);
 
-    $('.button').addClass('btn-in-game')
+    $('.button').addClass('btn-in-game');
     $('.button').removeClass('play-again');
 
     // remove hard mode button
 
     $('#random-game-btn').remove();
 }
+
+//to-do
+
+// style 'click on:' area 
+// implement setTimeout
+// format text to occur on top of images. this means changing images into divs with background image and aria labels
+

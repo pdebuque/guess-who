@@ -18,13 +18,13 @@ body {
 
 #all-content {
     position: relative;
-    max-width: 900px;
+    max-width: 850px;
     margin: auto;
 }
 
 .button {
     font-size: 30px;
-    margin: 20px;
+    margin: 20px 20px 5px 20px;
     color: white;
     display: inline-block;
     padding: 10px 15px;
@@ -61,11 +61,22 @@ body {
     cursor: pointer;
 }
 
+#random-game-btn:hover {
+    cursor: pointer;
+}
+
 #guess-zone {
     color: white;
-    margin: 10px 50px;
+    margin: 10px 20px 20px 20px;
     font-size: 20px;
+    background-color: rgb(255, 0, 0);
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
 }
+
+/* ----------- people and images ------------ */
+
 
 #list-of-people {
     display: flex;
@@ -73,25 +84,47 @@ body {
     justify-content: space-around;
 }
 
+.prof-pic {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    width: 250px;
+    margin: 10px;
+    border-radius: 4px;
+    background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%)
+}
+
+/* 
 img {
     opacity: 1;
     border-radius: 4px;
+} */
+
+.empty {
+    height: 80%;
 }
 
-.img-game-on:hover {
+.game-on:hover {
     cursor: pointer;
+}
+
+.on-image-text {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+}
+
+.correct {
+    background-color: green;
+    margin-bottom: 0;
+    padding: 10px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 /* -------- tryAgain() classes --------- */
 
 .blur {
     filter: blur(4px) brightness(50%);
-}
-
-.on-image-text {
-    text-align: center;
-    top: -10px;
-    color: white;
-    font-size: 20px;
-    font-weight: 700;
 }
