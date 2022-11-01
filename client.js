@@ -5,10 +5,10 @@ console.log('Here are all the available people:', people); // i added two so it 
 $(document).ready(onReady);
 
 function onReady() {
-    loadRandom();
+    loadImages();
+    $('#play-game-btn').on('click', loadImages);
     $('#play-game-btn').on('click', startGame);
 }
-
 
 function randomNum(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min)
@@ -50,6 +50,7 @@ function loadRandom() {
 }
 
 function loadImages() {
+    $('#list-of-people').empty();
     for (let person of people) {
         $('#list-of-people').append(`
             <div>
@@ -63,12 +64,15 @@ function loadImages() {
 function startGame() {
     console.log('in startGame');
     // reset stuff in case this is not the first time playing
-    $('#play-game-btn').removeClass('play-again');
-    $('#play-game-btn').addClass('btn-in-game');
-    $('#play-game-btn').empty().text('MAKE YOUR GUESS');
 
-    $('img').removeClass('blur');
-    $('img').next().empty();
+    resetGame();
+
+    // $('#play-game-btn').removeClass('play-again');
+    // $('#play-game-btn').addClass('btn-in-game');
+    // $('#play-game-btn').empty().text('MAKE YOUR GUESS');
+
+    // $('img').removeClass('blur');
+    // $('img').next().empty();
 
     // how to randomize array of images?...
 
@@ -95,8 +99,7 @@ function startGame() {
 }
 
 function congratulate() {
-    // clear all the stuff from previous wrong guesses
-    $('.on-image-text').empty();
+
 
     //remove in-game functionality on images
     $(`img`).removeClass('img-game-on');
@@ -115,9 +118,21 @@ function congratulate() {
     // Turn top button to play again option
 
     $('#play-game-btn').html('PLAY AGAIN?');
+    $('#play-game-btn').on('click', startGame);
+
     $('#play-game-btn').removeClass('btn-in-game')
     $('#play-game-btn').addClass('play-again');
 
+    // create hard mode option
+
+    $('#btn-container').append(`
+        <div id="random-game-btn" class="button play-again">
+             HARD MODE?
+        </div>
+`);
+
+    $('#random-game-btn').on('click', loadRandom);
+    $('#random-game-btn').on('click', startGame);
 
 }
 
@@ -131,5 +146,20 @@ function tryAgain() {
 }
 
 function resetGame() {
+    // clear text under images
+    $('img').next().empty();
 
+    // remove image blur
+    $('img').removeClass('blur');
+
+    // reset start game buttons
+    $('#play-game-btn').html('MAKE YOUR GUESS');
+    $('.button').off('click', startGame);
+
+    $('.button').addClass('btn-in-game')
+    $('.button').removeClass('play-again');
+
+    // remove hard mode button
+
+    $('#random-game-btn').remove();
 }

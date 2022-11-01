@@ -22,7 +22,7 @@ body {
     margin: auto;
 }
 
-#play-game-btn {
+.button {
     font-size: 30px;
     margin: 20px;
     color: white;
@@ -33,10 +33,6 @@ body {
 
 .btn-in-game {
     background-color: rgb(83, 83, 83);
-}
-
-.btn-in-game:hover {
-    background-color: grey;
 }
 
 .play-again {
