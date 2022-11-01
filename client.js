@@ -44,8 +44,6 @@ function loadRandom() {
             </div>
         `)
     }
-
-
     // append people
 }
 
@@ -136,14 +134,13 @@ function activateButtons() {
 
     $('#btn-container').append(`
         <div id="random-game-btn" class="button play-again">
-             HARD MODE?
+             RANDOMIZE?
         </div>
 `);
 
     $('#random-game-btn').on('click', loadRandom);
     $('#random-game-btn').on('click', startGame);
 }
-
 
 function tryAgain() {
     $(this).addClass('.blur')

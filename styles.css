@@ -35,6 +35,14 @@ body {
     background-color: rgb(83, 83, 83);
 }
 
+.btn-in-game:hover {
+    cursor: default;
+}
+
+.play-again:hover {
+    cursor: pointer;
+}
+
 .play-again {
     background-color: red;
     animation: bounce 1s infinite;
@@ -57,9 +65,10 @@ body {
 
 }
 
+/* 
 #play-game-btn:hover {
     cursor: pointer;
-}
+} */
 
 #random-game-btn:hover {
     cursor: pointer;
@@ -135,4 +144,8 @@ img {
 
 .blur {
     filter: blur(4px) brightness(50%);
+}
+
+.blur:hover {
+    cursor: default;
 }
