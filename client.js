@@ -146,14 +146,19 @@ function activateButtons() {
 
 
 function tryAgain() {
-    $(this).addClass('blur')
+    $(this).addClass('.blur')
+    $(this).children('.on-image-text').addClass('incorrect');
 
+    $(this).children('.on-image-text').empty().append(`
+    TRY AGAIN
+`)
 }
 
 function resetGame() {
     // clear text under images
     $('.prof-pic').children('.on-image-text').empty();
     $('.prof-pic').children('.on-image-text').removeClass('correct');
+    $('.prof-pic').children('.on-image-text').removeClass('incorrect');
 
     // remove image blur
     $('.prof-pic').removeClass('blur');
